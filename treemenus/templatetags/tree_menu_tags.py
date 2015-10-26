@@ -60,7 +60,10 @@ class ReverseNamedURLNode(Node):
         self.parser = parser
 
     def render(self, context):
-        from django.template import TOKEN_BLOCK, Token
+        if django.VERSION >= (1, 8):
+            from django.template.base import TOKEN_BLOCK, Token
+        else:
+            from django.template import TOKEN_BLOCK, Token
 
         resolved_named_url = self.named_url.resolve(context)
         if django.VERSION >= (1, 3):
